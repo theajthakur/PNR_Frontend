@@ -4,23 +4,12 @@ import { FaSearch, FaTrain } from "react-icons/fa";
 import { FaTicket } from "react-icons/fa6";
 export default function Navbar() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="mb-5">
+      <nav className="navbar navbar-expand navbar-light bg-light">
         <div className="container">
           <a className="navbar-brand" href="#">
             InstantPNR
           </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
