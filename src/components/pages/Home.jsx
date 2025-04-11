@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import "../styles/Home.css";
 export default function Home() {
   const [pnr, setPnr] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   function isNumber(input) {
     const pattern = /^-?\d*(\.\d*)?$/;
     return pattern.test(input.trim());
   }
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const submitPnr = async () => {
+    if (pnr.length != 10) return alert("Invalid PNR!");
+    const res = await fetch(`${apiUrl}/pnr/${pnr}`);
+    const data = await res.json();
+    if (data?.status == "error") return setErrorMsg(data.message);
+  };
 
   return (
     <div className="container align-items-center">
@@ -27,13 +36,20 @@ export default function Home() {
               }}
             />
             {pnr.length === 10 ? (
-              <button className="btn btn-primary">
+              <button className="btn btn-primary" onClick={submitPnr}>
                 <span className="bi bi-search"></span>
               </button>
             ) : (
               ""
             )}
           </div>
+          {errorMsg ? (
+            <p className="text-center small lead m-0 mt-3 alert alert-danger">
+              {errorMsg}
+            </p>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

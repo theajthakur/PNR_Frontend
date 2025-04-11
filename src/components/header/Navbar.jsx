@@ -1,7 +1,4 @@
 import "../styles/navbar.css";
-import React from "react";
-import { FaSearch, FaTrain } from "react-icons/fa";
-import { FaTicket } from "react-icons/fa6";
 export default function Navbar() {
   return (
     <div className="mb-5">
@@ -14,19 +11,19 @@ export default function Navbar() {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <FaTicket className="react-icon" />
+                  <span className="bi bi-ticket"></span>
                   PNR Status
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <FaTrain className="react-icon" />
+                  <span className="bi bi-train-freight-front"></span>
                   Train Status
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <FaSearch className="react-icon" />
+                  <span className="bi bi-search"></span>
                   Train Finder
                 </a>
               </li>
