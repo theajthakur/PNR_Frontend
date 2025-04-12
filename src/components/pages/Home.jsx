@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
-import Motion from "../loaders/Motion";
-import Circular from "../loaders/Circular";
+import Motion from "../Motion";
+import Circular from "../Circular";
 import PnrDetails from "./PnrDetails";
 export default function Home() {
   const [pnr, setPnr] = useState("");
