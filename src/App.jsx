@@ -10,16 +10,16 @@ import Tnc from "./components/pages/Tnc";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Router>
+    <Router basename="/PNR_Frontend">
+      <>
+        <Navbar />
         <Routes>
-          <Route path="/PNR_Frontend/" element={<Home />} />
-          <Route path="/PNR_Frontend/about" element={<About />} />
-          <Route path="/PNR_Frontend/terms-conditions" element={<Tnc />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/terms-conditions" element={<Tnc />} />
         </Routes>
-      </Router>
-    </>
+      </>
+    </Router>
   );
 }
 
