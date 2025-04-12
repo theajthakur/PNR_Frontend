@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "../styles/Home.css";
 import Motion from "../loaders/Motion";
 import Circular from "../loaders/Circular";
+import PnrDetails from "./PnrDetails";
 export default function Home() {
   const [pnr, setPnr] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pnrData, setPnrData] = useState(null);
   function isNumber(input) {
     const pattern = /^-?\d*(\.\d*)?$/;
     return pattern.test(input.trim());
@@ -56,6 +58,8 @@ export default function Home() {
             <p className="text-center small lead m-0 mt-3 alert alert-danger">
               {errorMsg}
             </p>
+          ) : pnrData && pnrData.status == "success" ? (
+            <PnrDetails data={JSON.stringify(pnrData)} />
           ) : (
             ""
           )}
