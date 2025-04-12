@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
+import Motion from "../loaders/Motion";
+import Circular from "../loaders/Circular";
 export default function Home() {
   const [pnr, setPnr] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   function isNumber(input) {
     const pattern = /^-?\d*(\.\d*)?$/;
     return pattern.test(input.trim());
@@ -11,8 +14,10 @@ export default function Home() {
 
   const submitPnr = async () => {
     if (pnr.length != 10) return alert("Invalid PNR!");
+    setLoading(true);
     const res = await fetch(`${apiUrl}/pnr/${pnr}`);
     const data = await res.json();
+    setLoading(false);
     if (data?.status == "error") return setErrorMsg(data.message);
   };
 
@@ -24,25 +29,29 @@ export default function Home() {
       </div>
       <div className="pnr-search-section row justify-content-center">
         <div className="shadow-lg p-5 card col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-          <div className="myInputGroup">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter Your PNR"
-              value={pnr}
-              onInput={(event) => {
-                const value = event.target.value;
-                if (isNumber(value) && value.length <= 10) setPnr(value);
-              }}
-            />
-            {pnr.length === 10 ? (
-              <button className="btn btn-primary" onClick={submitPnr}>
-                <span className="bi bi-search"></span>
-              </button>
-            ) : (
-              ""
-            )}
-          </div>
+          {loading ? (
+            <Circular />
+          ) : (
+            <div className="myInputGroup">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter Your PNR"
+                value={pnr}
+                onInput={(event) => {
+                  const value = event.target.value;
+                  if (isNumber(value) && value.length <= 10) setPnr(value);
+                }}
+              />
+              {pnr.length === 10 ? (
+                <button className="btn btn-primary" onClick={submitPnr}>
+                  <span className="bi bi-search"></span>
+                </button>
+              ) : (
+                ""
+              )}
+            </div>
+          )}
           {errorMsg ? (
             <p className="text-center small lead m-0 mt-3 alert alert-danger">
               {errorMsg}
