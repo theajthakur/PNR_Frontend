@@ -5,7 +5,7 @@ import Circular from "../loaders/Circular";
 import PnrDetails from "./PnrDetails";
 export default function Home() {
   const [pnr, setPnr] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pnrData, setPnrData] = useState(null);
   function isNumber(input) {
@@ -15,12 +15,14 @@ export default function Home() {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const submitPnr = async () => {
+    setErrorMsg(null);
     if (pnr.length != 10) return alert("Invalid PNR!");
     setLoading(true);
     const res = await fetch(`${apiUrl}/pnr/${pnr}`);
     const data = await res.json();
     setLoading(false);
     if (data?.status == "error") return setErrorMsg(data.message);
+    setPnrData(data);
   };
 
   return (
@@ -30,7 +32,7 @@ export default function Home() {
         <p>Get your PNR status instantly</p>
       </div>
       <div className="pnr-search-section row justify-content-center">
-        <div className="shadow-lg p-5 card col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div className="shadow-lg p-5 card col-md-11 col-lg-9 col-xl-8">
           {loading ? (
             <Circular />
           ) : (

@@ -1,0 +1,5 @@
+@media screen and (max-width: 576px) {
+  .pnr_data_container {
+    font-size: 0.8rem;
+  }
+}
