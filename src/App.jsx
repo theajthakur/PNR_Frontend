@@ -11,7 +11,7 @@ import Network from "./components/loaders/Network";
 
 function App() {
   return (
-    <Router basename="/PNR_Frontend">
+    <Router>
       <>
         <Navbar />
         <Network />
