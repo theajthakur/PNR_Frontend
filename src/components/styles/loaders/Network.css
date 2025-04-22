@@ -1,0 +1,16 @@
+.networkLoader {
+  position: relative;
+  overflow: hidden;
+  height: 10px;
+  transition: 1s;
+}
+
+.networkLoader .innerLoader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  height: 5px;
+  border-radius: 10px;
+  transition: 3s;
+}
