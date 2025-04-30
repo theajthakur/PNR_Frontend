@@ -4,6 +4,7 @@ import "../styles/loaders/Network.css";
 export default function Network() {
   const [loadWidth, setLoadWidth] = useState(0);
   const [loaderView, setLoaderView] = useState(true);
+  const [error, setError] = useState(null);
   const animationRef = useRef(null);
 
   useEffect(() => {
@@ -25,9 +26,17 @@ export default function Network() {
       fetch("https://pnr-backend.onrender.com/pnr/2233414076")
         .then((response) => {
           if (!response.ok) {
-            throw new Error(
-              "Network response was not ok " + response.statusText
-            );
+            return response.json().then((errorData) => {
+              console.log(errorData.status);
+              setError(errorData.message || "Something went wrong");
+              clearInterval(animationRef.current);
+              setLoaderView(false);
+              throw new Error(
+                `API error: ${response.status} - ${
+                  errorData.message || "Unknown error"
+                }`
+              );
+            });
           }
           return response.json();
         })
@@ -41,6 +50,7 @@ export default function Network() {
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
+          setLoadWidth(0);
         });
     }
 
@@ -48,14 +58,37 @@ export default function Network() {
   }, []);
 
   return (
-    <div
-      className="networkLoader mb-5"
-      style={{ height: loaderView ? "10px" : "0px" }}
-    >
+    <>
+      {error ? (
+        <div className="alert alert-danger rounded-0  mb-0" role="alert">
+          <div className="d-inline-flex w-100 justify-content-center align-items-center">
+            <div className="alert-container">
+              <p className="lead m-0">{error}</p>
+            </div>
+            <div className="ms-auto">
+              <button
+                className="btn btn-danger me-3"
+                onClick={() => {
+                  setError(null);
+                }}
+              >
+                x
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div
-        className={`innerLoader ${loadWidth === 100 ? "bg-success" : ""}`}
-        style={{ width: `${loadWidth}%` }}
-      ></div>
-    </div>
+        className="networkLoader mb-5"
+        style={{ height: loaderView ? "10px" : "0px" }}
+      >
+        <div
+          className={`innerLoader ${loadWidth === 100 ? "bg-success" : ""}`}
+          style={{ width: `${loadWidth}%` }}
+        ></div>
+      </div>
+    </>
   );
 }
